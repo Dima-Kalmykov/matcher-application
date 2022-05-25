@@ -1,36 +1,36 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    id("org.springframework.boot") version "2.7.0"
-    id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    kotlin("jvm") version "1.6.21"
-    kotlin("plugin.spring") version "1.6.21"
-}
+    id("org.springframework.boot")
+    id("io.spring.dependency-management")
 
-group = "com.example"
-version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_17
+    kotlin("jvm")
+    kotlin("plugin.spring")
+}
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+    // Spring
+    implementation(group = "org.springframework.kafka", name = "spring-kafka")
+    implementation(group = "org.springframework.boot", name = "spring-boot-starter")
+    implementation(group = "org.springframework.boot", name = "spring-boot-starter-web")
+    implementation(group = "org.springframework.boot", name = "spring-boot-starter-actuator")
+
+    // Utils
+    implementation(group = "org.jetbrains.kotlin", name = "kotlin-reflect")
+    implementation(group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8")
+    implementation(group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin")
+
+    // Logging
+    val loggingVersion = properties["kotlinLoggingVersion"] as String
+    implementation(group = "io.github.microutils", name = "kotlin-logging", version = loggingVersion)
+
+    // Test
+    testImplementation(group = "org.springframework.boot", name = "spring-boot-starter-test")
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "17"
-    }
-}
-
-tasks.withType<Test> {
+tasks.test {
     useJUnitPlatform()
 }

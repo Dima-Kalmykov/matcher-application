@@ -1,0 +1,15 @@
+server:
+  port: ${PORT:5000}
+
+spring:
+  application:
+    name: matcher-application
+  config:
+    import: optional:file:.env[.properties]
+  kafka:
+    consumer:
+      bootstrap-servers: ${HOST_IP}:${HOST_PORT}
+      auto-offset-reset: earliest
+      group-id: matcher-application.group
+    properties:
+      topic: publications.created
