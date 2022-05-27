@@ -13,3 +13,7 @@ spring:
       group-id: matcher-application.group
     properties:
       topic: publications.created
+
+rest:
+  subscriptions-api:
+    url: http://paramparam/api

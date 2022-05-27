@@ -8,6 +8,7 @@ pluginManagement {
         id("io.spring.dependency-management") version springDMVersion
 
         kotlin("jvm") version kotlinVersion
+        kotlin("kapt") version kotlinVersion
         kotlin("plugin.spring") version kotlinVersion
     }
 }

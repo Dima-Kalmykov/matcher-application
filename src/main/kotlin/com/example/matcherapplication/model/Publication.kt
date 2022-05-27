@@ -1,5 +1,3 @@
 package com.example.matcherapplication.model
 
-data class Publication(
-    val name: String,
-)
+data class Publication(val channelId: String)

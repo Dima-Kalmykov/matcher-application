@@ -3,6 +3,7 @@ plugins {
     id("io.spring.dependency-management")
 
     kotlin("jvm")
+    kotlin("kapt")
     kotlin("plugin.spring")
 }
 
@@ -22,6 +23,9 @@ dependencies {
     implementation(group = "org.jetbrains.kotlin", name = "kotlin-reflect")
     implementation(group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8")
     implementation(group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin")
+
+    // Annotation processor
+    kapt(group = "org.springframework.boot", name = "spring-boot-configuration-processor")
 
     // Logging
     val loggingVersion = properties["kotlinLoggingVersion"] as String
