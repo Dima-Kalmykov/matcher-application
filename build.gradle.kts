@@ -26,6 +26,7 @@ dependencies {
 
     // Annotation processor
     kapt(group = "org.springframework.boot", name = "spring-boot-configuration-processor")
+    annotationProcessor(group = "org.springframework.boot", name = "spring-boot-configuration-processor")
 
     // Logging
     val loggingVersion = properties["kotlinLoggingVersion"] as String

@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty
 
 @ConstructorBinding
 @ConfigurationProperties(prefix = "rest.subscriptions-api")
-class RestProperties(
+data class RestProperties(
     val url: String,
     @NestedConfigurationProperty val resources: SubscriptionsResources = SubscriptionsResources(),
 )

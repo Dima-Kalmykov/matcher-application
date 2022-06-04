@@ -18,20 +18,18 @@ class SubscriptionsService(
     private val restTemplate: RestTemplate = RestTemplate(),
 ) {
 
-    fun getUsers(channelId: String): List<User> {
-        return withLog {
-            checkNotNull(
-                restTemplate.exchange(
-                    fromUriString(restProperties.url)
-                        .path(restProperties.resources.users)
-                        .queryParam("channelId", channelId)
-                        .toUriString(),
-                    HttpMethod.GET,
-                    HttpEntity.EMPTY,
-                    object : ParameterizedTypeReference<List<User>>() {}
-                ).body
-            )
-        }
+    fun getUsers(channelId: String) = withLog {
+        checkNotNull(
+            restTemplate.exchange(
+                fromUriString(restProperties.url)
+                    .path(restProperties.resources.users)
+                    .queryParam("channelId", channelId)
+                    .toUriString(),
+                HttpMethod.GET,
+                HttpEntity.EMPTY,
+                object : ParameterizedTypeReference<List<User>>() {}
+            ).body
+        )
     }
 
     private fun <T> withLog(function: () -> T): T {
