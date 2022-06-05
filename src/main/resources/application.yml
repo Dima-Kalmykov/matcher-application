@@ -12,7 +12,7 @@ spring:
       auto-offset-reset: earliest
       group-id: matcher-application.group
     properties:
-      topic: publications.created
+      topic: posts-topic
 
 rest:
   subscriptions-api:

@@ -1,6 +1,5 @@
 package com.example.matcherapplication.consumer
 
-import com.example.matcherapplication.model.Publication
 import com.example.matcherapplication.service.NotificationService
 import com.example.matcherapplication.service.SubscriptionsService
 import mu.KotlinLogging
@@ -16,9 +15,9 @@ class KafkaPublicationsListener(
 ) {
 
     @KafkaListener(topics = ["\${spring.kafka.properties.topic}"])
-    fun consume(message: Publication) {
+    fun consume(message: String) {
         logger.info { "Received message: $message" }
-        val users = subscriptionsService.getUsers(message.channelId)
+        val users = subscriptionsService.getUsers(message)
 
         users.forEach { notificationService.notify(it) }
     }

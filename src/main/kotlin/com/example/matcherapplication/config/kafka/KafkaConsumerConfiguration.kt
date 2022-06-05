@@ -1,7 +1,6 @@
 package com.example.matcherapplication.config.kafka
 
 
-import com.example.matcherapplication.model.Publication
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.common.serialization.StringDeserializer
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties
@@ -10,8 +9,6 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory
 import org.springframework.kafka.core.ConsumerFactory
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory
 import org.springframework.kafka.listener.DefaultErrorHandler
-import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
-import org.springframework.kafka.support.serializer.JsonDeserializer
 import org.springframework.util.backoff.FixedBackOff
 
 private const val MAX_ATTEMPTS = 1L
@@ -25,24 +22,16 @@ fun kafkaConsumerConfiguration() = beans {
             ConsumerConfig.GROUP_ID_CONFIG to kafkaProperties.consumer.groupId,
             ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG to kafkaProperties.consumer.bootstrapServers,
             ConsumerConfig.AUTO_OFFSET_RESET_CONFIG to kafkaProperties.consumer.autoOffsetReset,
-            JsonDeserializer.VALUE_DEFAULT_TYPE to Publication::class.java,
-            JsonDeserializer.USE_TYPE_INFO_HEADERS to false,
+            ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG to StringDeserializer::class.java,
+            ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG to StringDeserializer::class.java,
         )
 
-        val errorHandlerDeserializer = ErrorHandlingDeserializer<Publication>(
-            JsonDeserializer()
-        )
-
-        DefaultKafkaConsumerFactory(
-            consumerProperties,
-            StringDeserializer(),
-            errorHandlerDeserializer,
-        )
+        DefaultKafkaConsumerFactory<String, String>(consumerProperties)
     }
 
     bean("kafkaListenerContainerFactory") {
-        ConcurrentKafkaListenerContainerFactory<String, Publication>().apply {
-            consumerFactory = ref<ConsumerFactory<String, Publication>>()
+        ConcurrentKafkaListenerContainerFactory<String, String>().apply {
+            consumerFactory = ref<ConsumerFactory<String, String>>()
             setCommonErrorHandler(
                 DefaultErrorHandler(
                     FixedBackOff(RETRY_INTERVAL, MAX_ATTEMPTS),
