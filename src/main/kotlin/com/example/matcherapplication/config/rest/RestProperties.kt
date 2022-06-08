@@ -13,5 +13,5 @@ data class RestProperties(
 
 @ConstructorBinding
 data class SubscriptionsResources(
-    val users: String = "/users",
+    val subscription: String = "/api/v1/subscription",
 )

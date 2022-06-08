@@ -16,4 +16,4 @@ spring:
 
 rest:
   subscriptions-api:
-    url: http://paramparam/api
+    url: http://178.250.157.184:6001/

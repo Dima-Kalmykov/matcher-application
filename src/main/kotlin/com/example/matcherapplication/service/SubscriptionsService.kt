@@ -1,11 +1,8 @@
 package com.example.matcherapplication.service
 
 import com.example.matcherapplication.config.rest.RestProperties
-import com.example.matcherapplication.model.User
+import com.example.matcherapplication.model.SubscriptionWrapper
 import mu.KotlinLogging
-import org.springframework.core.ParameterizedTypeReference
-import org.springframework.http.HttpEntity
-import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder.fromUriString
@@ -18,18 +15,15 @@ class SubscriptionsService(
     private val restTemplate: RestTemplate = RestTemplate(),
 ) {
 
-    fun getUsers(channelId: String) = withLog {
-        checkNotNull(
-            restTemplate.exchange(
-                fromUriString(restProperties.url)
-                    .path(restProperties.resources.users)
-                    .queryParam("channelId", channelId)
-                    .toUriString(),
-                HttpMethod.GET,
-                HttpEntity.EMPTY,
-                object : ParameterizedTypeReference<List<User>>() {}
-            ).body
-        )
+    fun getUserEmails(channelName: String, userEmail: String) = withLog {
+        restTemplate.getForObject(
+            fromUriString(restProperties.url)
+                .path(restProperties.resources.subscription)
+                .queryParam("channelName", channelName)
+                .queryParam("userEmail", userEmail)
+                .toUriString(),
+            SubscriptionWrapper::class.java,
+        )?.subscriptions?.map { it.user.email } ?: emptyList()
     }
 
     private fun <T> withLog(function: () -> T): T {

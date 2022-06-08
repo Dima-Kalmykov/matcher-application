@@ -15,10 +15,10 @@ class KafkaPublicationsListener(
 ) {
 
     @KafkaListener(topics = ["\${spring.kafka.properties.topic}"])
-    fun consume(message: String) {
-        logger.info { "Received message: $message" }
-        val users = subscriptionsService.getUsers(message)
+    fun consume(channelName: String) {
+        logger.info { "Received message: $channelName" }
+        val emails = subscriptionsService.getUserEmails(channelName = channelName, userEmail = "")
 
-        users.forEach { notificationService.notify(it) }
+        emails.forEach { notificationService.notify(it) }
     }
 }
