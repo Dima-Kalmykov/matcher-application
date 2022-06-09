@@ -23,7 +23,7 @@ class SubscriptionsService(
                 .queryParam("userEmail", userEmail)
                 .toUriString(),
             SubscriptionWrapper::class.java,
-        )?.subscriptions?.map { it.user.email } ?: emptyList()
+        )?.subscriptions ?: emptyList()
     }
 
     private fun <T> withLog(function: () -> T): T {

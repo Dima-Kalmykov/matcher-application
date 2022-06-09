@@ -8,7 +8,7 @@ private val logger = KotlinLogging.logger { }
 @Service
 class NotificationService {
 
-    fun notify(email: String) {
-        logger.info { "Send notification to user with email $email" }
+    fun notify(email: String, channelName: String) {
+        logger.info { "Send notification to user with email $email about new post in channel $channelName" }
     }
 }
