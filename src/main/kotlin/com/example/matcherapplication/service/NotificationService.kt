@@ -9,6 +9,6 @@ private val logger = KotlinLogging.logger { }
 class NotificationService {
 
     fun notify(email: String, channelName: String) {
-        logger.info { "Send notification to user with email $email about new post in channel $channelName" }
+        logger.info { "Send notification to user with email '$email' about new post in channel '$channelName'" }
     }
 }
