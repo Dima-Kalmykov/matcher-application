@@ -20,7 +20,7 @@ class KafkaPublicationsListener(
         val subscriptions = subscriptionsService.getUserEmails(channelName = channelName, userEmail = "")
 
         subscriptions.forEach {
-            notificationService.notify(it.user.email, it.channel.name)
+            notificationService.notify(it.userEmail, it.channelName)
         }
     }
 }
